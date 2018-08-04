@@ -7,43 +7,46 @@ module.exports = {
     `);
   },
 
-  findOne(id) {
+  findById(id) {
     return db.one(`
     SELECT * FROM food
-    WHERE course_id = $1
+    WHERE id = $1
     `, id);
   },
 
-  create(foodData) {
+  save(food) {
     return db.one(`
     INSERT INTO food
-    (name, description)
+    (name, genre, calories, course_id)
     VALUES
-    ($1, $2)
+    ($/name/, $/genre/, $/calories/, $/course_id/)
     RETURNING *
-    `, [foodData.name, foodData.description]);
+    `, food);
   },
 
   delete(id) {
     return db.query(`
     DELETE FROM food
-    WHERE food_id = $1
+    WHERE id = $1
     `, id);
   },
 
-  update(id, foodData) {
+  update(food) {
     return db.query(`
     UPDATE food
     SET 
       name = $2, 
-      description =$3
-    WHERE food_id = $1
+      genre = $3,
+      calories = $4
+    WHERE id = $1
     RETURNING *
-    `, [id, foodData.name, foodData.description]);
+    `, [food.id, food.name, food.genre, food.calories, food.course_id]);
   },
 };
+//module.exports.findById(2).then(food => console.log(food));
+//module.exports.findAll().then(food => console.log(food));
+//module.exports.update({id: 4, name: 'pasta', genre: 'starch', calories: 200 }).then(food => console.log(food));
+// module.exports.destroy(1).then(food => console.log(food));
+module.exports.save({name: 'salad', genre: 'greens', calories: 150, course_id: 3}).then(food => console.log(food));
 
-//module.exports.findById(1).then(food => console.log(food));
- module.exports.findAll().then(food => console.log(food));
- //module.exports.save({name: 'ggg', description: 'tasty'}).then(food => console.log(food));
- //module.exports.destroy(1).then(food => console.log(food));
+//console.log(module.exports);

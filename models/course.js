@@ -24,37 +24,37 @@ module.exports = {
     `, [course.name]);
   },
 
-//   delete(id) {
-//     return db.query(`
-//     DELETE FROM course
-//     WHERE id = $1
-//     `, id);
-//   },
+  delete(id) {
+    return db.query(`
+    DELETE FROM course
+    WHERE id = $1
+    `, id);
+  },
 
-//   update(course) {
-//     return db.query(`
-//     UPDATE course
-//     SET 
-//       name = $1, 
-//       WHERE id = $1
-//       RETURNING *
-//     `, [course.name]);
-//   },
+  update(course) {
+    return db.one(`
+    UPDATE course
+    SET 
+      name = $/name/ 
+      WHERE id = $/id/
+      RETURNING *
+    `, course);
+  },
 };
 
-// findById script works
+// findById script --works
 //module.exports.findById(2).then(course => console.log(course));
 
-// findAll script works
+// findAll script --works
 //module.exports.findAll().then(course => console.log(course));
 
 // update script --not working
-// module.exports.update({name: 'dessert',}).then(food => console.log(food));
+   module.exports.update({id: 4, name: 'appetizer'}).then(course => console.log(course));
 
-// delete script
-//module.exports.delete(13).then(course => console.log(course));
+// delete script --works but how does it know to delete the last item added? 
+// module.exports.delete(5).then(course => console.log(course));
 
-// save script
-   module.exports.save({name: 'dessert'}).then(course => console.log(course));
+// save script --works
+// module.exports.save({name: 'dessert'}).then(course => console.log(course));
 
-//console.log(module.exports);
+// console.log(module.exports);
